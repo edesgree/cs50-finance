@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Quote
+{% endblock %}
+
+{% block main %}
+
+
+    <section class="bought-list justify-content-md-center row my-3">
+        {% if share_detail is defined %}
+            {% if share_detail %}
+            <div class="col-6">
+                <table class="table ">
+                    <thead>
+                        <tr>
+                            <th scope="col">Symbol</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Shares</th>
+                            <th class="text-end" scope="col">Price</th>
+                            <th class="text-end" scope="col">TOTAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{share_detail.symbol}}</td>
+                            <td>{{share_detail.name}}</td>
+                            <td>{{sharesnb}}</td>
+                            <td class="text-end">{{share_detail.price | usd}}</td>
+                            <td class="text-end">{{purchase_price}}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td class="fw-bold text-end" colspan="4">Cash in wallet</td>
+                            <td class="text-end">{{cash_remaining}}</td>
+                        </tr>
+                        <tr>
+                            <td class="fw-bold text-end" colspan="4">TOTAL (inc shares)</td>
+                            <td class="text-end">{{total_assets}}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            {% else %}
+                <h2>No results</h2>
+            {% endif %}
+        {% endif %}
+    </section>
+{% endblock %}

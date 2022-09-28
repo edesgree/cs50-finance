@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Index
+{% endblock %}
+
+{% block main %}
+
+<section class="bought-list justify-content-md-center row my-3">
+    {% if shares_list %}
+    <div class="col-8">
+        <table class="table ">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th scope="col">Symbol</th>
+                    <th class="text-start" scope="col">Name</th>
+                    <th scope="col">Shares</th>
+                    <th class="text-end" scope="col">Buying price</th>
+                    <th class="text-end" scope="col">Today price</th>
+                    <th class="text-end" scope="col">TOTAL</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for share in shares_list %}
+                    <tr>
+                        <td><img src="static/images/{{share.trend}}.png" alt="{{share.trend}}"/></td>
+                        <td>{{share.symbol}}</td>
+                        <td class="text-start">{{share.company_name}}</td>
+                        <td>{{share.shares}}</td>
+                        <td class="text-end">{{share.price | usd}} </td>
+                        <td class="text-end">{{share.today_price | usd}} </td>
+                        <td class="text-end">{{share.total_price | usd}}</td>
+                    </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <td class="fw-bold text-end" colspan="6">Cash in wallet</td>
+                    <td class="text-end">{{cash_remaining | usd}}</td>
+                </tr>
+                <tr>
+                    <td class="fw-bold text-end" colspan="6">TOTAL (inc shares)</td>
+                    <td class="text-end">{{total_assets | usd}}</td>
+                </tr>
+            </tfoot>
+
+        </table>
+    </div>
+    {% else %}
+        <h2>No results</h2>
+    {% endif %}
+
+</section>
+
+
+
+{% endblock %}

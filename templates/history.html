@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}
+History
+{% endblock %}
+
+{% block main %}
+<h2>Transaction history</h2>
+
+<section class="bought-list justify-content-md-center row my-3">
+    {% if history_list %}
+    <div class="col-8">
+        <table class="table ">
+            <thead>
+                <tr>
+                    <th class="text-start" scope="col">Symbol</th>
+                    <th scope="col">Shares</th>
+                    <th class="text-end" scope="col">Buying price</th>
+                    <th class="text-end" scope="col">Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in history_list %}
+                    <tr class="order-type-{{order.type}}">
+                        <td class="text-start">{{order.symbol}}</td>
+                        <td>{{order.shares}}</td>
+                        <td class="text-end">{{order.price | usd}} </td>
+                        <td class="text-end">{{order.date}}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+        <p>No results</p>
+    {% endif %}
+</section>
+{% endblock %}

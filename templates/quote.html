@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Quote
+{% endblock %}
+
+{% block main %}
+
+    <div class=" text-center">
+        <div class="row">
+            <div class="col-3 mx-auto">
+                <form action="/quote" method="POST" >
+                    <div class=" form-group">
+                        <div class="input-group mb-3">
+                            <input name="symbol" type="text" class="form-control" placeholder="Enter share's symbol"
+                                aria-label="Enter share's symbol">
+                            <button name="submit" type="submit" class="btn btn-primary">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <section class="share-list justify-content-md-center row my-3">
+        {% if share is defined %}
+            {% if share %}
+            <div class="col-6">
+                <table class="table ">
+                    <thead>
+                        <tr>
+                            <th scope="col">Company name</th>
+                            <th scope="col">share symbol</th>
+                            <th scope="col">share price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{share.name}}</td>
+                            <td>{{share.symbol}}</td>
+                            <td>{{share.price | usd}}</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+                <h2>No results</h2>
+            {% endif %}
+        {% endif %}
+    </section>
+{% endblock %}

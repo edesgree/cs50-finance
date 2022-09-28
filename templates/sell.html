@@ -1,0 +1,89 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Sell
+{% endblock %}
+
+{% block main %}
+
+    <div class=" text-center">
+        <div class="row">
+            <div class="col-5 mx-auto">
+
+                <form id="form_sell" action="/sell" method="POST" >
+                    <div class=" form-group">
+                        <div class="input-group mb-3">
+                            <select class="form-select mx-auto w-auto" id="symbol_select" name="symbol">
+                                <option disabled="" selected="">Symbol</option>
+                                {% for share in shares_list %}
+                                    <option value="{{share.symbol}}">{{share.symbol}}</option>
+                                {% endfor %}
+                            </select>
+                            <input type="hidden" name="hidden_value" id="hidden_value" />
+
+                            <input autocomplete="off" class="form-control mx-auto" min="1" name="shares" id="sharesnb_input" placeholder="Shares" type="number">
+
+                            <button type="submit" class="btn btn-primary">Sell</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+
+<script>
+    $(document).ready(function(){
+
+        load_data();
+        var symbol_select = $('#symbol_select');
+        var sharesnb_input = $('#sharesnb_input');
+        // function to load data in ajax
+        function load_data(query='')
+        {
+
+            $.ajax({
+                url:"/get_number_shares",
+                method:"POST",
+                data:{query:query},
+                success:function(data)
+                {
+                    share_nb = data;
+
+                    // set a maximum for the input type number
+                    sharesnb_input.attr({
+                        "max" : share_nb,
+                        "min" : 1
+                    });
+                    // display a message telling user how many shares he can sell at the max
+                    $(".sale-msg").remove();
+                    if(data!=null){
+                        $("nav").after(`<header class='sale-msg'>
+                            <div class='alert alert-primary mb-0 text-center' role='alert'>
+                                You have `+share_nb+` shares of `+symbol_select.val()+` available for sell
+                            </div>
+                        </header>`);
+                    }
+
+
+                }
+            })
+
+        }
+        // execute when user change choice in symbol selector
+        symbol_select.change(function(){
+            // store the value in a hidden input
+            $('#hidden_value').val(symbol_select.val());
+            var query = $('#hidden_value').val();
+            // call ajax function with that value
+            load_data(query);
+        });
+    });
+
+</script>
+
+{% endblock %}
