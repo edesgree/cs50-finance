@@ -57,4 +57,4 @@ This project is to implement a website via which users can “buy” and “sell
 
 
 
-#### Created while working on the [The Odin Project](https://www.theodinproject.com/)
+#### Created while working on  [CS50](https://www.edx.org/cs50) (Computer Science Courses and Programs from Harvard)
